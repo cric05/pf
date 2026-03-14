@@ -2055,7 +2055,7 @@ font-size:56%;
         position: absolute;
         top: 0;
         left: 0%;
-        bottom: 50%;
+         bottom: 25%;
         transform: translateX(-50%);
         z-index: 0;
         width: 100%;
@@ -2067,6 +2067,7 @@ font-size:56%;
     }
 
     .standing-avatar {
+       
         width: 380px;
         /* Larger to show half body and hands */
         max-width: 95vw;
@@ -2091,9 +2092,10 @@ font-size:56%;
     }
 
     .pulse-circle {
-        top: 300px;
+        top: 430px;
         /* Center pulses on the body in mobile */
     }
+    
 }
 
 @media (max-width: 768px) {
