@@ -2052,8 +2052,9 @@ font-size:56%;
     }
 
     .services-avatar-column {
+       
         position: absolute;
-        top: 0;
+        top: 30px;
         left: 0%;
          bottom: 25%;
         transform: translateX(-50%);
@@ -2090,13 +2091,16 @@ font-size:56%;
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
     }
+   
 
     .pulse-circle {
-        top: 430px;
+        top: 450px;
         /* Center pulses on the body in mobile */
     }
     
+    
 }
+
 
 @media (max-width: 768px) {
    
