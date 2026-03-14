@@ -1,0 +1,2296 @@
+
+/* GENERAL STYLING & CSS VARIABLES */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap');
+
+/* --- THEME VARIABLES --- */
+:root {
+    /* Default Dark Theme */
+    --bg-color: #081b29;
+    --second-bg-color: #112e42;
+    --text-color: #ededed;
+    /* --border-color: rgba(0, 171, 240, 0.4);*/
+    --main-color: #00abf0;
+    --main-background: var(--main-color);
+    /* NEW: for gradients */
+    --border-color: rgba(0, 171, 240, 0.4);
+}
+
+body.light-mode {
+    /* Light Theme */
+    --bg-color: #f0f8ff;
+    /* Alice Blue */
+    --second-bg-color: #ffffff;
+    --text-color: #333333;
+    --border-color: rgba(0, 171, 240, 0.6);
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x:hidden;
+    width:100%;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* --- ANIMATED BODY BORDER --- */
+.animated-border-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.animated-border {
+    width: 100%;
+    height: 100%;
+    background: repeating-conic-gradient(from var(--a), var(--main-background) 0%, var(--main-background) 5%, transparent 5%, transparent 40%, var(--main-background) 50%);
+    animation: animated-border-spin 15s linear infinite;
+    opacity: 0.15;
+    transition: background 0.3s;
+}
+
+@property --a {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes animated-border-spin {
+    from {
+        --a: 0deg;
+    }
+
+    to {
+        --a: 360deg;
+    }
+}
+
+section {
+    min-height: 100vh;
+    padding:10rem 6% 2rem;
+    width:100%;
+overflow:hidden;
+}
+@media (max-width:768px){
+
+
+
+}
+
+.heading {
+    text-align: center;
+    font-size: 4.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    margin-bottom: 5rem;
+}
+
+.heading-content {
+    position: relative;
+    /* This is now the anchor for our pseudo-element */
+    color: inherit;
+
+}
+
+.heading .heading-content span {
+    color: var(--main-color);
+}
+
+/* The sweeping underline pseudo-element, now attached to the h2 itself */
+.heading-content::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    /* Position it below the text */
+    width: 100%;
+    height: 4px;
+    background: var(--main-color);
+    border-radius: 5px;
+
+    /* Animation setup: start with zero width, grow from the left */
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* The AOS trigger is now on the h2, but it targets the inner span's ::after */
+.heading.aos-animate .heading-content::after {
+    transform: scaleX(1);
+}
+
+/* --- ANIMATED RESUME BUTTON --- */
+.btn-container {
+    position: relative;
+    display: inline-flex;
+    /* Use inline-flex to keep it inline */
+    margin-top: 3rem;
+}
+
+.btn-main {
+    /* This is the central, visible button */
+    padding: 1.2rem 2.8rem;
+    background: var(--main-color);
+    border-radius: 4rem;
+    box-shadow: 0 0 1rem var(--main-color);
+    font-size: 1.2rem;
+    color: var(--second-bg-color);
+    letter-spacing: .1rem;
+    font-weight: 600;
+    transition: .4s ease;
+    z-index: 2;
+    /* Keep it on top */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+}
+
+body.light-mode .btn-main {
+    color: #fff;
+}
+
+.btn-options {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    gap:200px;
+    align-items: center;
+
+}
+
+.btn-option {
+    /* These are the hidden side buttons */
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--main-color);
+    border-radius: 50%;
+    box-shadow: 0 0 1rem var(--main-color);
+    font-size: 2rem;
+    padding: 5px;
+    color: var(--second-bg-color);
+    cursor: pointer;
+    z-index: 1;
+    /* Behind the main button */
+    opacity: 0;
+    /* Hidden by default */
+    transform: scale(0.8);
+    transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    /* Bouncy transition */
+}
+
+body.light-mode .btn-option {
+    color: #fff;
+}
+
+.btn-option:hover {
+    filter: brightness(1.1);
+    transform: scale(1.1);
+    /* Pop effect on hover */
+}
+
+/* The Animation on Hover */
+.btn-container:hover .btn-main {
+    transform: scale(0.9);
+    background: transparent;
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
+    box-shadow: none;
+}
+
+.btn-container:hover .btn-option {
+    opacity: 1;
+}
+
+.btn-container:hover .btn-option.view {
+    transform: translateX(-120%);
+    /* Slide out to the left */
+}
+
+.btn-container:hover .btn-option.download {
+    transform: translateX(120%);
+    /* Slide out to the right */
+}
+.btn-container.active .btn-option {
+    opacity: 1;
+}
+
+.btn-container.active .btn-option.view {
+    transform: translateX(-120%);
+}
+
+.btn-container.active .btn-option.download {
+    transform: translateX(120%);
+}
+.btn-container.active .btn-main{
+transform:scale(0.9);
+}
+
+.btn {
+    display: inline-block;
+    padding: 1.2rem 2.8rem;
+    background: var(--main-color);
+    border-radius: 4rem;
+    box-shadow: 0 0 1rem var(--main-color);
+    font-size: 1.6rem;
+    color: var(--second-bg-color);
+    letter-spacing: .1rem;
+    font-weight: 600;
+    transition: .5s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    box-shadow: none;
+}
+
+body.light-mode .btn {
+    color: #fff;
+}
+
+
+/* --- HEADER --- */
+.header {
+position: fixed;
+top:0;
+left:0;
+width:100%;
+padding:2rem 9%;
+background:var(--bg-color);
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:100;
+
+transition: background .3s ease, border .3s ease;
+}
+
+.header.sticky {
+    border-bottom: .1rem solid rgba(0, 0, 0, .1);
+    background: var(--second-bg-color);
+}
+
+/* ======================= HEADER LOGO & AVATAR STYLES ======================= */
+
+/* Update the logo 'a' tag to be a flex container */
+.logo {
+    display: flex;
+    align-items: center;
+    /* Vertically center the avatar and text */
+    gap: 1.2rem;
+    /* Space between avatar and text */
+    font-size: 2.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+    font-family: 'Rajdhani', sans-serif;
+    /* Remove cursor: default if it was there, as it's a link now */
+}
+
+/* Style the new avatar in the logo */
+.logo-avatar {
+    width: 40px;
+    /* A good size for a navbar */
+    height: 40px;
+    border-radius: 50%;
+    /* Make it a perfect circle */
+    border: 2px solid var(--main-color);
+    /* Add a colored border */
+    padding: 2px;
+    /* A little space between the image and border */
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add a subtle hover effect */
+.logo:hover .logo-avatar {
+    transform: rotate(360deg) scale(1.1);
+    box-shadow: 0 0 10px var(--main-color);
+}
+
+.navbar a {
+    font-size: 1.7rem;
+    color: var(--text-color);
+    margin-left: 4rem;
+    transition: .3s;
+
+    /* === NEW: Add position relative for the pseudo-element === */
+    position: relative;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    /* Position it slightly below the text */
+    width: 100%;
+    height: 3px;
+    background: var(--main-color);
+    border-radius: 5px;
+
+    /* Animation setup: start scaled to 0 from the center */
+    transform: scaleX(0);
+    transform-origin: center;
+    /* Change origin to center */
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    /* Smooth, fast-out transition */
+}
+
+/* On hover, scale the underline to its full width */
+.navbar a:hover::after,
+.navbar a.active::after {
+    /* Also apply to the active link */
+    transform: scaleX(1);
+}
+
+/* Make the text color change on hover as before */
+.navbar a:hover,
+.navbar a.active {
+    color: var(--main-color);
+}
+
+.header-right {
+    display:flex;
+align-items:center;
+gap:2rem;
+min-width:120px;
+justify-content:flex-end;
+    /* Reduced gap for mobile */
+}
+
+.theme-icon {
+    font-size: 2.4rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.theme-icon:hover {
+    color: var(--main-color);
+    transform: rotate(20deg) scale(1.1);
+}
+
+#menu-icon {
+     font-size:3.6rem;
+color:var(--text-color);
+display:none;
+cursor:pointer;
+flex-shrink:0;
+}
+
+.theme-controls {
+    position: relative;
+    /* This is crucial for positioning the palette */
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* The Color Palette Panel (The popup) */
+.color-palette{
+position:absolute;
+top:110%;
+right:0;
+width:220px;
+max-width:90vw;
+background:var(--second-bg-color);
+border:1px solid var(--border-color);
+padding:1.5rem;
+border-radius:1rem;
+box-shadow:0 8px 25px rgba(0,0,0,0.2);
+
+opacity:0;
+transform:translateY(10px) scale(.95);
+pointer-events:none;
+transition:opacity .3s ease, transform .3s ease;
+}
+
+.footer:hover .color-palette {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
+/* Animation: Active/Visible state (toggled by JS) */
+.color-palette.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.palette-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+    color: var(--main-color);
+}
+
+.pal.services-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.palette-options {
+    display: grid;
+    grid-template-columns: repeat(3, 40px);
+    gap: 2.5rem;
+    justify-items: center;
+}
+
+/* Individual color circle */
+.color-option {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid var(--bg-color);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, border-color 0.3s ease;
+
+    /* Staggered animation: initial state */
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.color-option:hover {
+    transform: scale(1.15);
+}
+
+/* This is the key for the "one-by-one" animation */
+.color-palette.active .color-option {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Adding individual delays */
+.color-palette.active .color-option:nth-child(1) {
+    transition-delay: 0.05s;
+}
+
+.color-palette.active .color-option:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.color-palette.active .color-option:nth-child(3) {
+    transition-delay: 0.15s;
+}
+
+.color-palette.active .color-option:nth-child(4) {
+    transition-delay: 0.2s;
+}
+
+.color-palette.active .color-option:nth-child(5) {
+    transition-delay: 0.25s;
+}
+
+.color-palette.active .color-option:nth-child(6) {
+    transition-delay: 0.3s;
+}
+
+.color-palette.active .color-option:nth-child(7) {
+    transition-delay: 0.35s;
+}
+
+.color-palette.active .color-option:nth-child(8) {
+    transition-delay: 0.4s;
+}
+
+.color-palette.active .color-option:nth-child(9) {
+    transition-delay: 0.45s;
+}
+
+
+/* Styling the solid color circles */
+.color-option:not(.gradient) {
+    background-color: var(--color-opt);
+}
+
+/* Styling the gradient circles */
+.color-option.gradient {
+    background: var(--color-opt);
+    /* Fallback */
+    background: attr(data-gradient);
+    /* Use gradient from data attribute */
+}
+
+/* --- HOME SECTION --- */
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.home-content h3 {
+    font-size: 3.2rem;
+    font-weight: 700;
+}
+
+.home-content h3:nth-of-type(2) {
+    margin-bottom: 2rem;
+}
+
+.home-content h1 {
+    font-size: 5.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+span {
+    color: var(--main-color);
+}
+
+.home-content p {
+    font-size: 1.6rem;
+}
+
+.slogan-container {
+    height: 12rem;
+    margin: 1rem 0 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.slogan {
+    font-family: 'Dancing Script', cursive;
+    font-size: 9rem;
+    color: var(--main-color);
+    opacity: 0;
+    text-shadow: 0 0 10px var(--main-color);
+    animation: slogan-fade 10s infinite ease-in-out;
+
+}
+
+@keyframes slogan-fade {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    10%,
+    40% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50%,
+    90% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+.social-media a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    background: transparent;
+    border: .2rem solid var(--main-color);
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--main-color);
+    margin: 3rem 1.5rem 3rem 0;
+    transition: .5s ease;
+}
+
+.social-media a:hover {
+    background: var(--main-color);
+    color: var(--second-bg-color);
+    box-shadow: 0 0 1rem var(--main-color);
+}
+
+body.light-mode .social-media a:hover {
+    color: #fff;
+}
+
+
+/* --- ABOUT SECTION --- */
+.about {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6rem;
+    background: var(--second-bg-color);
+    flex-direction: row;
+}
+
+/* PROFILE CONTAINER */
+.profile-container{
+position:relative;
+width:220px;
+height:220px;
+margin:2rem auto;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* PROFILE IMAGE */
+.profile-photo{
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:50%;
+display:block;
+z-index:2;
+position:relative;
+}
+.profile-container{
+flex-shrink:0;
+}
+
+/* ANIMATED BORDER */
+.circle-border{
+position:absolute;
+top:50%;
+left:50%;
+width:245px;
+height:245px;
+font-weight: bolder;
+border-radius:50%;
+border:3px solid transparent;
+transform:translate(-50%,-50%);
+
+border-top-color:var(--main-color);
+border-bottom-color: var(--border-color);
+
+animation: spin 1s linear infinite, blink 1.5s infinite;
+}
+
+/* SPIN ANIMATION */
+
+@keyframes spin{
+0%{
+transform:translate(-50%,-50%) rotate(0deg);
+}
+100%{
+transform:translate(-50%,-50%) rotate(360deg);
+}
+}
+@keyframes blink {
+    0%, 100% { opacity: 3; }
+    50% { opacity: 0.3; }
+}
+
+@media (max-width:768px){
+
+.profile-container{
+width:170px;
+height:170px;
+}
+
+.circle-border{
+width:190px;
+height:190px;
+}
+
+}
+
+
+
+
+.about-content h3 {
+    font-size: 2.6rem;
+    text-align: center;
+}
+.about-content{
+    padding:20px 30px;
+line-height:1.7;
+max-width:1000px;
+}
+
+
+.about-content p {
+    font-size: 1.6rem;
+    margin: 2rem 0 3rem;
+    line-height: 1.8;
+
+    margin-left: 0;
+    border-style: solid;
+    border-color: var(--main-color);
+    padding: 20PX;
+    border-radius: 50PX;
+}
+
+.about-content p:hover {
+    color: var(--second-bg-color);
+    border-color: var(--main-color);
+    background-color: white;
+    font-weight: bolder;
+
+}
+body.light-mode .about-content p:hover {
+     color: var(--text-color);
+    border-color: var(--main-color);
+    background-color:white;
+    font-weight: bolder;
+    
+}
+@media (max-width:768px){
+
+.about{
+flex-direction:column;
+text-align:center;
+gap:3rem;
+}
+
+.about-content{
+max-width:100%;
+}
+
+}
+
+
+/* --- SKILLS SECTION --- */
+/*.skills h2 {
+    margin-bottom: 5rem;
+}*/
+/* ======================= NEW SKILLS SECTION STYLES ======================= */
+.skills {
+    background: var(--bg-color);
+    /* Matches your desired background */
+}
+
+.skills .heading {
+    margin-bottom: 5rem;
+}
+
+.skills-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
+}
+
+.skill-category {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2rem;
+    padding: 3rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+
+    /* === NEW ANIMATION CODE === */
+    /* This will apply the animation once the AOS fade-in is complete */
+    animation: float-and-shake 8s ease-in-out infinite;
+}
+
+/* We use the AOS delay attributes to also delay our CSS animation! */
+.skill-category[data-aos-delay="100"] {
+    animation-delay: 0s;
+    /* First one starts immediately */
+}
+
+.skill-category[data-aos-delay="200"] {
+    animation-delay: -1.5s;
+    /* Second one starts 1.5s into its animation cycle */
+}
+
+.skill-category[data-aos-delay="300"] {
+    animation-delay: -3s;
+    /* Third one starts 3s into its cycle */
+}
+
+
+.skill-category:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 171, 240, 0.5);
+    /* Use a subtle main color for the border on hover */
+}
+
+/* Light Mode adjustments for glassmorphism */
+body.light-mode .skill-category {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .skill-category:hover {
+    border-color: rgba(0, 171, 240, 0.8);
+}
+
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid var(--main-color);
+    padding-bottom: 1.5rem;
+}
+
+.category-icon {
+    font-size: 3.5rem;
+    color: var(--main-color);
+    width: 50px;
+    /* fixed width for alignment */
+    text-align: center;
+}
+
+.category-header h3 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    flex-grow: 1;
+    /* Allows the container to grow and align items nicely */
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--second-bg-color);
+    padding: 0.8rem 1.5rem;
+    border-radius: 5rem;
+    /* Pill shape */
+    border: 1px solid transparent;
+    transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+
+    /* Animation setup */
+    opacity: 0;
+    animation: fadeInSkills 0.5s ease forwards;
+}
+
+/* Staggered animation for skills appearing */
+.skill-category[data-aos="fade-up"].aos-animate .skill-item:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.skill-category[data-aos="fade-up"].aos-animate .skill-item:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.skill-category[data-aos="fade-up"].aos-animate .skill-item:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.skill-category[data-aos="fade-up"].aos-animate .skill-item:nth-child(4) {
+    animation-delay: 0.5s;
+}
+
+.skill-category[data-aos="fade-up"].aos-animate .skill-item:nth-child(5) {
+    animation-delay: 0.6s;
+}
+
+/* Add more if a category has more than 5 skills */
+
+
+@keyframes fadeInSkills {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.skill-item:hover {
+    transform: scale(1.05);
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color: black;
+    /* Text color changes on hover */
+
+}
+
+body.light-mode .skill-item:hover {
+    color: #fff;
+}
+
+.skill-item span:hover {
+    color: black;
+}
+
+.skill-item span {
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.skill-icon {
+    font-size: 2.2rem;
+    width: 24px;
+    /* Align icons */
+    text-align: center;
+}
+
+.svg-icon {
+    height: 22px;
+    /* For the VS Code SVG */
+    width: auto;
+}
+
+/* Light mode skill pills */
+body.light-mode .skill-item {
+    background: #e9ecef;
+}
+
+/* Responsiveness for skills section */
+@media (max-width: 400px) {
+    .skills-showcase {
+        grid-template-columns: 1fr;
+        /* Single column on very small screens */
+    }
+
+    .skill-category {
+        padding: 2rem;
+    }
+}
+
+/* --- PROJECTS SECTION --- */
+/* Add these new rules to your style.css in the projects section */
+
+.project-box-link {
+height:calc(100vh - 80px);
+
+    display: block;
+    /* Make the link a block to contain the div properly */
+    color: inherit;
+    /* Make the text inside inherit its color, not turn blue */
+    text-decoration: none;
+    /* Remove the default underline */
+}
+.projects-container{
+scroll-padding-top:10px;
+}
+
+.project-layer .link-icon {
+    /* Style the icon that's no longer inside an 'a' tag */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    background: #fff;
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--second-bg-color);
+    line-height: 1;
+}
+
+.projects {
+    background: var(--second-bg-color);
+}
+
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 2.5rem;
+    justify-content: center;
+    justify-items: center;
+
+}
+
+.project-box {
+    position: relative;
+    border-radius: 2rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    /* The box will take up 100% of its grid column's width */
+    max-width: 50rem;
+    /* Set a maximum width (50rem = 500px) */
+    aspect-ratio: 1 / 1;
+}
+
+.project-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: .5s ease;
+}
+
+.project-box:hover img {
+    transform: scale(1.1);
+}
+
+.project-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, .3), var(--main-background));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 4rem;
+    transform: translateY(100%);
+    transition: .5s ease;
+}
+
+.project-box:hover .project-layer {
+    transform: translateY(0);
+}
+
+.project-layer h4 {
+    font-size: 3rem;
+    font-family: 'Rajdhani', sans-serif;
+    color: #fff;
+}
+
+.project-layer p {
+    font-size: 1.6rem;
+    margin: .3rem 0 1rem;
+    color: #fff;
+}
+
+.project-layer a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 5rem;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.project-layer a i {
+    font-size: 2rem;
+    color: var(--second-bg-color);
+}
+
+.projects-container::-webkit-scrollbar{
+display:none;
+}
+.project-box.active .project-layer{
+transform: translateY(0);
+}
+@media (max-width:768px){
+
+.project-layer h4{
+font-size:2.2rem;
+}
+
+.project-layer p{
+font-size:1.4rem;
+}
+
+}
+@media (max-width:768px){
+    
+ 
+
+.projects{
+height:calc(60vh - 120px);
+overflow-y:auto;
+scroll-snap-type:y mandatory;
+
+}
+.project.heading .heading-content{
+    position: fixed;
+    top: 0;
+}
+.projects-container{
+overscroll-behavior: contain;
+}
+.projects-container{
+-webkit-overflow-scrolling: touch;
+}
+.projects-container{
+    
+border: 2px solid var(--main-color);
+display:flex;
+flex-direction:column;
+scroll-behavior: smooth;
+gap:0;
+}
+
+.project-box-link{
+height:calc(100vh - 120px);
+
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.project-box{
+width:90%;
+max-width:400px;
+}
+
+}
+
+
+
+/* --- CONTACT FORM SUCCESS MESSAGE --- */
+#success-message {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--second-bg-color);
+    border-radius: .8rem;
+    display: none;
+    /* Re-declaring for clarity, JS will toggle this */
+}
+
+#success-message h3 {
+    font-size: 3.2rem;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--main-color);
+    margin: 1.5rem 0 0.5rem;
+}
+
+#success-message p {
+    font-size: 1.6rem;
+}
+
+.checkmark-wrapper {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+}
+
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 3;
+    stroke-miterlimit: 10;
+    stroke: var(--main-color);
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px 50px var(--main-color);
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scale {
+
+    0%,
+    100% {
+        transform: none;
+    }
+
+    50% {
+        transform: scale3d(1.1, 1.1, 1);
+    }
+}
+
+@keyframes fill {
+    100% {
+        box-shadow: inset 0px 0px 0px 50px var(--main-color);
+    }
+}
+
+/* --- GAME  */
+/* ======================= NEW GAME HUB STYLES ======================= */
+.game {
+    background: var(--bg-color);
+    /* Use your theme's background */
+}
+
+/* ======================= UPDATED GAME HUB STYLES ======================= */
+/* In style.css, find and replace the game hub styles with these */
+
+.game-hub-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--second-bg-color);
+    border-radius: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* === NEW: Set position relative to be the anchor for the avatar === */
+    position: relative;
+    overflow: hidden;
+    /* Important for containing the absolutely positioned avatar */
+}
+
+/* --- The Intro Screen --- */
+.game-hub-intro {
+    display: flex;
+    /* Kept as flex for the main button layout */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* Center the "Let's Start" text and button */
+    text-align: center;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    width: 100%;
+}
+
+.game-hub-intro.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+    position: absolute;
+    pointer-events: none;
+}
+
+/* === NEW: Avatar is now positioned absolutely to the top-left === */
+.avatar-container {
+    position: absolute;
+    top: 1.5rem;
+    /* A little bit of spacing from the edges */
+    left: 1.5rem;
+    width: 100px;
+    /* A good, fixed size for the corner */
+    height: 100px;
+
+    /* === THIS IS THE FIX === */
+    /* Remove the clip-path and use border-radius to make it a circle */
+    border-radius: 50%;
+
+    /* We can use the background to create a border effect */
+    background: var(--main-color);
+
+    /* These help center the image perfectly inside the circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.hub-avatar {
+    width: 90%;
+    /* Make it slightly smaller than the container (100px * 90% = 90px) */
+    height: 90%;
+    object-fit: cover;
+
+    /* === THIS IS ALSO PART OF THE FIX === */
+    /* Ensure the image itself is clipped into a circle */
+    border-radius: 50%;
+
+    /* The pulse animation will now apply to the circular image */
+    animation: avatar-pulse 2.5s ease-in-out infinite;
+}
+
+
+/* DELETE the old avatar-float keyframes and ADD this new one */
+@keyframes avatar-pulse {
+    0% {
+        filter: drop-shadow(0 0 5px var(--main-color)) brightness(1);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 15px var(--main-color)) brightness(1.2);
+    }
+
+    100% {
+        filter: drop-shadow(0 0 5px var(--main-color)) brightness(1);
+    }
+}
+
+.game-icon-container {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    /* Position to the top-right */
+    width: 100px;
+    height: 100px;
+
+    /* Make it a circle */
+    border-radius: 50%;
+    background: var(--main-color);
+
+    /* Center the icon inside */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* This is the icon itself, mirroring the hub-avatar */
+.hub-game-icon {
+    font-size: 5rem;
+    /* Make the icon large */
+    color: var(--bg-color);
+    /* Color it to stand out against the main-color background */
+
+    /* Apply the EXACT SAME pulse animation as the avatar */
+    animation: avatar-pulse 2.5s ease-in-out infinite;
+}
+
+/* Special rule for light mode to make the icon visible */
+body.light-mode .hub-game-icon {
+    color: #fff;
+}
+
+.intro-text h3 {
+    font-size: 3rem;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+#play-game-btn {
+    margin: 1rem 0 0 0;
+}
+
+/* --- The Game Showcase --- */
+.game-showcase {
+    display: none;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    width: 100%;
+    opacity: 0;
+    animation: fadeInShowcase 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeInShowcase {
+    to {
+        opacity: 1;
+    }
+}
+
+/* === NEW: Styles for the Back Button === */
+.back-button-container {
+    flex-basis: 100%;
+    /* Make it take the full width to position content */
+    display: flex;
+    justify-content: flex-end;
+    /* Position button to the right */
+    padding: 0 1rem 1rem;
+}
+
+.back-btn {
+    background: transparent;
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
+    padding: 0.8rem 1.5rem;
+    border-radius: 5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.back-btn:hover {
+    background: var(--main-color);
+    color: var(--second-bg-color);
+}
+
+body.light-mode .back-btn:hover {
+    color: #fff;
+}
+
+.game-card {
+    background: color-mix(in srgb, var(--bg-color), transparent 20%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    flex-basis: 400px;
+    /* Base width for each game card */
+    text-align: center;
+}
+
+.game-card h3 {
+    font-size: 2.5rem;
+    color: var(--main-color);
+    margin-bottom: 1rem;
+}
+
+.game-card p {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+}
+
+/* Styles for your Bug Squasher game */
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.score-display {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.game-grid-container {
+    display: flex;
+    justify-content: center;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    width: 300px;
+    /* Fixed size for the grid */
+    height: 300px;
+}
+
+.game-cell {
+    background: var(--second-bg-color);
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.game-cell.bug {
+    background-image: url('https://api.iconify.design/emojione/bug.svg');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: pop-in 0.2s ease-out;
+}
+
+@keyframes pop-in {
+    from {
+        transform: scale(0.5);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+
+
+/* ======================= HOBBIES & INTERESTS STYLES ======================= */
+
+.hobbies {
+    background: var(--bg-color);
+}
+
+.hobbies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 4rem;
+    padding: 2rem 0;
+}
+
+/* This container enables the 3D perspective for the flip effect */
+.hobby-card {
+    background-color: transparent;
+    height: 350px;
+    perspective: 1000px;
+    /* Essential for the 3D effect */
+}
+
+/* This is the element that gets flipped */
+.hobby-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 1.5rem;
+}
+
+/* The card flips when the container is hovered */
+.hobby-card:hover .hobby-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Styling for the front and back faces of the card */
+.hobby-card-front,
+.hobby-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    /* For Safari */
+    backface-visibility: hidden;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Styling the Front Face --- */
+.hobby-card-front {
+    background-color: var(--second-bg-color);
+    color: var(--text-color);
+}
+
+.hobby-card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7);
+    /* Darken image slightly to make text readable */
+    transition: filter 0.3s ease;
+}
+
+.hobby-card:hover .hobby-card-front img {
+    filter: brightness(0.5);
+}
+
+.card-title {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 2.4rem;
+    font-weight: 700;
+    font-family: 'Rajdhani', sans-serif;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+
+/* --- Styling the Back Face --- */
+.hobby-card-back {
+    background: var(--main-color);
+    color: var(--bg-color);
+    transform: rotateY(180deg);
+    /* Start with the back face flipped away */
+    flex-direction: column;
+    padding: 2rem;
+}
+
+body.light-mode .hobby-card-back {
+    color: #fff;
+}
+
+.hobby-card-back h3 {
+    font-size: 2.2rem;
+    font-family: 'Rajdhani', sans-serif;
+    margin-bottom: 1rem;
+}
+
+.hobby-card-back p {
+    font-size: 1.6rem;
+    font-style: italic;
+}
+
+/* ======================= SERVICES SECTION STYLES ======================= */
+
+.services {
+    background: var(--second-bg-color);
+    /* A different background to stand out */
+}
+
+.services-container {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+    flex-wrap: wrap;
+    /* Allows it to wrap to a single column on smaller screens */
+}
+
+/* =================== CORRECTED SERVICES AVATAR STYLES =================== */
+
+/* --- The Avatar Column --- */
+/* =================== FINAL, REFINED SERVICES AVATAR STYLES =================== */
+
+/* --- The Avatar Column --- */
+.services-avatar-column {
+    flex: 1 1 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 550px;
+}
+
+/* This wrapper's job is to be the positioning anchor */
+.avatar-wrapper {
+    position: relative;
+    /* We don't need flexbox here anymore, which simplifies things */
+}
+
+/* The standing avatar itself. IT WILL NOT MOVE. */
+.standing-avatar {
+    width: 350px;
+    height: auto;
+    position: relative;
+    /* Keep it in the normal document flow */
+    z-index: 2;
+    /* On top of the pulses */
+    filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.4));
+}
+
+/* The pulsing background circles */
+.pulse-circle {
+    position: absolute;
+
+    /* === THIS IS THE KEY TO THE FIX === */
+    /* Position it at the very bottom of the wrapper */
+    top: 450px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Center it horizontally */
+
+    width: 20px;
+    /* Start very small, like a pebble drop */
+    height: 10px;
+    /* An oval on the floor */
+    background: var(--main-color);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1;
+    /* Behind the avatar */
+
+    /* We will use our new, more controlled animation */
+    animation: controlled-pulse 4s infinite ease-out;
+}
+
+/* A new, more controlled and subtle pulse animation */
+@keyframes controlled-pulse {
+    0% {
+        width: 20px;
+        height: 10px;
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+
+    100% {
+        /* The pulse expands to a fixed, controlled size */
+        width: 550px;
+        height: 275px;
+        opacity: 0;
+    }
+}
+
+/* Stagger the animations for the ripple effect */
+.pulse-circle.pulse-2 {
+    animation-delay: 1.3s;
+}
+
+.pulse-circle.pulse-3 {
+    animation-delay: 2.6s;
+}
+
+
+/* --- The Cards Column --- */
+.services-cards-column {
+    flex: 1 1 55%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.service-card {
+    background: color-mix(in srgb, var(--bg-color), transparent 30%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 3rem;
+    border-radius: 1.5rem;
+    border: 2px solid transparent;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    /* Align icon and text to the top */
+    gap: 2rem;
+}
+
+.service-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--main-color);
+}
+
+.service-icon {
+    font-size: 3.5rem;
+    color: var(--main-color);
+    padding-top: 5px;
+    /* Align icon better with the text */
+}
+
+.service-card h3 {
+    font-size: 2.2rem;
+    font-family: 'Rajdhani', sans-serif;
+    margin-bottom: 0.8rem;
+}
+
+.service-card p {
+    font-size: 1.6rem;
+    line-height: 1.6;
+}
+
+/* --- Responsiveness for Services Section --- */
+/* Consistently moved to main media queries at bottom */
+
+/* Add another media query for very small screens (e.g., iPhone SE) */
+/* Moved to main media queries */
+
+/* contact section */
+.contact form {
+    max-width: 70rem;
+    margin: 1rem auto;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact form .input-box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.contact form .input-box input,
+.contact form textarea {
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    background: var(--bg-color);
+    border-radius: .8rem;
+    margin: .7rem 0;
+}
+
+.contact form .input-box input {
+    width: 49%;
+}
+
+.contact form textarea {
+    resize: none;
+}
+
+/* ======================= ANIMATED FORM INPUT BORDERS ======================= */
+
+/* First, ensure the input fields have position: relative */
+/* Find this section in your style.css */
+
+/* ... (Styles for .project-layer, etc. are above this) ... */
+
+
+/* --- GAME & CONTACT SECTION --- */
+.contact {
+    background: var(--second-bg-color);
+}
+
+/* ... (other game styles) ... */
+
+
+.contact form {
+    max-width: 70rem;
+    margin: 1rem auto;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact form .input-box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+
+/* 
+   ============================================================
+   === DELETE THE CSS RULE(S) BELOW THAT STYLE YOUR INPUTS  ===
+   ============================================================
+*/
+
+/* (Your old code might look something like this. DELETE it.) */
+.contact form .input-box input,
+.contact form textarea {
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    background: var(--bg-color);
+    border-radius: .8rem;
+    margin: .7rem 0;
+}
+
+
+/* 
+   ============================================================
+   === PASTE THE NEW, COMPLETE CODE BLOCK HERE              ===
+   ============================================================
+*/
+
+/* ======================= DEFAULT ANIMATED FORM INPUT BORDERS ======================= */
+
+/* The main style for all form inputs */
+.contact form .input-box input,
+.contact form textarea {
+    /* Your existing styles are here */
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    background: var(--bg-color);
+    border-radius: .8rem;
+    margin: .7rem 0;
+
+    position: relative;
+    border: 2px solid transparent;
+
+    animation: blink-border-default 2.5s infinite;
+}
+
+/* We still want a slightly more intense effect on focus */
+.contact form .input-box input:focus,
+.contact form textarea:focus {
+    outline: none;
+    animation: blink-border-focus 1.5s infinite;
+}
+
+/* Animation definition for the DEFAULT state */
+@keyframes blink-border-default {
+    0% {
+        box-shadow: 0 0 3px 0px var(--main-color);
+    }
+
+    50% {
+        box-shadow: 0 0 8px 2px var(--main-color);
+    }
+
+    100% {
+        box-shadow: 0 0 3px 0px var(--main-color);
+    }
+}
+
+/* A separate, more intense animation for the FOCUSED state */
+@keyframes blink-border-focus {
+    0% {
+        box-shadow: 0 0 5px 0px var(--main-color);
+    }
+
+    50% {
+        box-shadow: 0 0 15px 5px var(--main-color);
+    }
+
+    100% {
+        box-shadow: 0 0 5px 0px var(--main-color);
+    }
+}
+
+
+/* ... (The rest of your CSS for the footer, etc., continues below this) ... */
+
+
+
+body.light-mode .contact form .input-box input,
+body.light-mode .contact form textarea {
+    background: #e9ecef;
+}
+
+/* --- FOOTER --- */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2rem 9%;
+    position: relative;
+    background: var(--bg-color);
+}
+
+.footer-text p {
+    font-size: 1.6rem;
+}
+
+.footer-iconTop a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: .8rem;
+    background: var(--main-color);
+    border-radius: .8rem;
+    transition: .5s ease;
+}
+
+.footer-iconTop a:hover {
+    box-shadow: 0 0 1rem var(--main-color);
+}
+
+.footer-iconTop a i {
+    font-size: 2.4rem;
+    color: var(--second-bg-color);
+}
+
+.color-option:hover {
+    transform: scale(1.2);
+}
+
+/* --- RESPONSIVENESS --- */
+
+/* --- RESPONSIVENESS --- */
+@media (max-width: 1200px) {
+    html {
+        font-size: 55%;
+    }
+}
+@media (max-width:768px){
+html{
+font-size:56%;
+}
+}
+
+@media (max-width: 991px) {
+    .header {
+        padding: 1.5rem 3%;
+        /* Reduced padding */
+    }
+
+    .theme-controls {
+        gap: 1.2rem;
+        /* Reduced gap */
+    }
+
+    .theme-icon {
+        font-size: 2rem;
+        /* Slightly smaller icons */
+    }
+
+    section {
+        padding: 10rem 3% 2rem;
+    }
+
+    .footer {
+        padding: 2rem 3%;
+    }
+
+    .about {
+        flex-direction: column;
+        text-align: center;
+        gap: 3rem;
+    }
+
+    .about-content {
+     
+        text-align: center;
+    }
+
+    .about-content p {
+        margin-left: 0;
+        text-align: justify;
+        border-radius: 1.5rem;
+        /* Better for mobile than pill shape */
+        padding: 1.5rem;
+    }
+
+    .about-img-container {
+        width: 50vw;
+        height: 50vw;
+        margin-top: 4rem;
+    }
+
+    /* SERVICES SECTION MOBILE */
+    .services-container {
+        position: relative;
+        flex-direction: column;
+        text-align: center;
+        padding-top: 15rem;
+        /* Space for the head to show at top center */
+        gap: 3rem;
+    }
+
+    .services-avatar-column {
+        position: absolute;
+        top: 0;
+        left: 0%;
+        bottom: 50%;
+        transform: translateX(-50%);
+        z-index: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0.7;
+        /* Make it visible but slightly faded so text is readable */
+    }
+
+    .standing-avatar {
+        width: 380px;
+        /* Larger to show half body and hands */
+        max-width: 95vw;
+        height: auto;
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+    }
+
+    .services-cards-column {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .service-card {
+        padding: 2.5rem;
+        background: color-mix(in srgb, var(--bg-color), transparent 30%);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .pulse-circle {
+        top: 300px;
+        /* Center pulses on the body in mobile */
+    }
+}
+
+@media (max-width: 768px) {
+   
+    #menu-icon {
+        display: block;
+    }
+
+    .navbar {
+        
+position:absolute;
+top:100%;
+left:0;
+transform:translateX(-100%);
+width:100%;
+padding:1rem 3%;
+background:var(--bg-color);
+border-top:.1rem solid rgba(0,0,0,.2);
+box-shadow:0 .5rem 1rem rgba(0,0,0,.2);
+transition:transform .3s ease;
+    }
+
+    .navbar.active {
+        transform:translateX(0);
+    }
+
+    .navbar a {
+        display: block;
+        font-size: 2rem;
+        margin: 3rem 0;
+    }
+
+    .home {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .home-content h1 {
+        font-size: 5rem;
+    }
+
+    .home-content h3 {
+        font-size: 2.6rem;
+    }
+
+    .slogan {
+        font-size: 4rem;
+    }
+
+    .social-media a {
+        margin: 2rem 0.75rem;
+    }
+
+    .btn-container {
+        margin-right: 5px;
+        margin-left: 0;
+        justify-content: center;
+        width: 100%;
+        display: flex;
+        /* Ensure it behaves as a container */
+    }
+
+    .btn-container:hover .btn-option.view {
+        transform: translate(-10%, -10%) scale(1.1);
+    }
+
+    .btn-container:hover .btn-option.download {
+        transform: translate(10%, -10%) scale(1.1);
+    }
+
+    .btn-main {
+        margin-left: 0;
+        padding: 1.2rem 2rem;
+        font-size: 1.4rem;
+    }
+
+    .btn {
+        margin-left: 0;
+    }
+
+    .contact form .input-box input {
+        width: 100%;
+    }
+
+    .footer {
+        flex-direction: column-reverse;
+        gap: 2rem;
+    }
+
+    .color-palette {
+        right: 0%;
+        transform: translateY(10px);
+        width: 220px;
+    }
+
+    .color-palette.active {
+        transform: translateY(0);
+    }
+}
+@media (max-width:768px){
+
+.color-palette{
+    right:0;
+    left:auto;
+    width:220px;
+}
+
+}
+
+@media (max-width:480px){
+
+.color-palette{
+width:200px;
+padding:1rem;
+}
+
+.color-option{
+    justify-content: space-between;
+width:30px;
+height:30px;
+}
+
+}
+
+@media (max-width: 450px) {
+    html {
+        font-size: 50%;
+    }
+
+    .home-content h1 {
+        font-size: 4rem;
+    }
+
+    /* standing-avatar rule removed to keep the 380px from 991px query */
+
+    .heading {
+        font-size: 3.5rem;
+    }
+}
+/*new line*/
+@media (max-width:600px){
+
+.header{
+padding:1.5rem 5%;
+}
+
+.logo{
+font-size:2rem;
+}
+
+.logo-avatar{
+width:32px;
+height:32px;
+}
+
+}
+
+@keyframes float-and-shake {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-5px) rotate(0.5deg);
+    }
+
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-3px) rotate(-0.5deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+
+
+
+
+
+
+/* @media (max-width:700px){
+    body{
+        width:494px;
+    }
+   
+    section{
+        width:494px;
+    }
+    .header {
+         width:494px;
+         
+        
+    }
+
+} */
