@@ -10,16 +10,97 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.header');
     const resumeBtn = document.querySelector(".btn-container");
  
-const projectContainer = document.querySelector(".projects-container");
 
-projectContainer.addEventListener("wheel", (e) => {
-    e.stopPropagation();
+const track = document.querySelector('.projects-track');
+const slides = Array.from(track.children);
+const nextButton = document.querySelector('.next-btn');
+const prevButton = document.querySelector('.prev-btn');
+const projectLinks = document.querySelectorAll('.project-box-link');
+
+let currentIndex = 0;
+
+function updateSlider() {
+    // Move the track
+    const amountToMove = currentIndex * 100;
+    track.style.transform = `translateX(-${amountToMove}%)`;
+    
+    // Update button visibility/opacity
+    updateButtonStates();
+}
+
+function updateButtonStates() {
+    // If at the first project, hide or dim the left arrow
+    if (currentIndex === 0) {
+        prevButton.style.opacity = "0.3";
+        prevButton.style.cursor = "not-allowed";
+    } else {
+        prevButton.style.opacity = "1";
+        prevButton.style.cursor = "pointer";
+    }
+
+    // If at the last project, hide or dim the right arrow
+    if (currentIndex === slides.length - 1) {
+        nextButton.style.opacity = "0.3";
+        nextButton.style.cursor = "not-allowed";
+    } else {
+        nextButton.style.opacity = "1";
+        nextButton.style.cursor = "pointer";
+    }
+}
+document.querySelectorAll('.project-box-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Only run this logic if the screen is mobile/tablet size
+        if (window.innerWidth <= 1024) {
+            const box = this.querySelector('.project-box');
+
+            // If the description layer is NOT visible yet
+            if (!box.classList.contains('active-layer')) {
+                e.preventDefault(); // Stop the link from opening
+                
+                // Hide any other visible descriptions (optional)
+                document.querySelectorAll('.project-box').forEach(b => {
+                    b.classList.remove('active-layer');
+                });
+
+                // Show the current description
+                box.classList.add('active-layer');
+            } 
+            // Else: Description is already showing, let the second click open the link
+        }
+    });
+});
+document.addEventListener('click', function(e) {
+    // If the click is NOT inside a project box link
+    if (!e.target.closest('.project-box-link')) {
+        document.querySelectorAll('.project-box').forEach(box => {
+            box.classList.remove('active-layer');
+        });
+    }
+});
+nextButton.addEventListener('click', () => {
+    // ONLY move forward if we aren't at the last slide
+    if (currentIndex < slides.length - 1) {
+        currentIndex++;
+        updateSlider();
+    }
 });
 
-projectContainer.addEventListener("touchmove", (e) => {
-    e.stopPropagation();
+prevButton.addEventListener('click', () => {
+    // ONLY move backward if we aren't at the first slide
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+    }
 });
 
+
+// Initialize button states on load
+updateButtonStates();
+
+// Fix layout on window resize
+window.addEventListener('resize', () => {
+    updateSlider();
+});
 document.addEventListener("click", (e) => {
 
     if (resumeBtn.contains(e.target)) {
@@ -31,31 +112,7 @@ document.addEventListener("click", (e) => {
     }
 
 });
-const projects = document.querySelectorAll(".project-box-link");
 
-projects.forEach(card=>{
-card.addEventListener("click",(e)=>{
-
-if(!card.classList.contains("active")){
-e.preventDefault();
-
-projects.forEach(c=>c.classList.remove("active"));
-card.classList.add("active");
-
-}else{
-card.classList.remove("active");
-}
-
-});
-});
-
-document.addEventListener("click",(e)=>{
-
-if(!e.target.closest(".project-box-link")){
-projects.forEach(card=>card.classList.remove("active"));
-}
-
-});
 
     menuIcon.onclick = () => {
         menuIcon.classList.toggle('fa-xmark');

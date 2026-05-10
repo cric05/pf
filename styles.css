@@ -993,69 +993,62 @@ body.light-mode .skill-item {
 /* --- PROJECTS SECTION --- */
 /* Add these new rules to your style.css in the projects section */
 
+.heading {
+    text-align: center;
+    font-size: 4.5rem;
+    margin-bottom: 5rem;
+    width: 100%;
+}
+
+.heading span {
+    color: var(--main-color);
+}
+/* --- Slider Logic --- */
+.projects-wrapper {
+    max-width: 50rem; /* Limits the width of the project box */
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.projects-carousel {
+    overflow: hidden;
+    border-radius: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centers the track content */
+}
+
+.projects-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* This creates the sliding effect */
+    width: 100%;
+}
+
 .project-box-link {
-height:calc(100vh - 80px);
-
-    display: block;
-    /* Make the link a block to contain the div properly */
-    color: inherit;
-    /* Make the text inside inherit its color, not turn blue */
-    text-decoration: none;
-    /* Remove the default underline */
-}
-.projects-container{
-scroll-padding-top:10px;
-}
-
-.project-layer .link-icon {
-    /* Style the icon that's no longer inside an 'a' tag */
-    display: inline-flex;
-    justify-content: center;
+    min-width: 100%;
+    display: flex;
+    justify-content: center; /* CRITICAL: Centers the box horizontally */
     align-items: center;
-    width: 4.5rem;
-    height: 4.5rem;
-    background: #fff;
-    border-radius: 50%;
-    font-size: 2rem;
-    color: var(--second-bg-color);
-    line-height: 1;
+    padding: 1rem;
 }
 
-.projects {
-    background: var(--second-bg-color);
-}
-
-.projects-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-    gap: 2.5rem;
-    justify-content: center;
-    justify-items: center;
-
-}
-
+/* --- Project Box Styling (Your Original Styles Improved) --- */
 .project-box {
     position: relative;
     border-radius: 2rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    display: flex;
-    width: 100%;
-    /* The box will take up 100% of its grid column's width */
-    max-width: 50rem;
-    /* Set a maximum width (50rem = 500px) */
-    aspect-ratio: 1 / 1;
+    width: 90%; 
+    aspect-ratio: 3/3;
+    background: var(--second-bg-color);
 }
 
 .project-box img {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 100%;
+    object-fit: cover;
     transition: .5s ease;
-}
-
-.project-box:hover img {
-    transform: scale(1.1);
 }
 
 .project-layer {
@@ -1064,7 +1057,7 @@ scroll-padding-top:10px;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, .3), var(--main-background));
+    background: linear-gradient(rgba(0, 0, 0, .7), var(--main-color));
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1074,97 +1067,115 @@ scroll-padding-top:10px;
     transform: translateY(100%);
     transition: .5s ease;
 }
+/* Add this to your index.css */
+.project-box.active-layer .project-layer {
+    transform: translateY(0);
+}
 
 .project-box:hover .project-layer {
     transform: translateY(0);
 }
 
-.project-layer h4 {
-    font-size: 3rem;
-    font-family: 'Rajdhani', sans-serif;
-    color: #fff;
-}
+.project-layer h4 { font-size: 3rem; color: #fff; }
+.project-layer p { font-size: 1.6rem; margin: .3rem 0 1rem; color: #fff; }
 
-.project-layer p {
-    font-size: 1.6rem;
-    margin: .3rem 0 1rem;
-    color: #fff;
-}
-
-.project-layer a {
+.project-layer .link-icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    background: #fff;
+    border-radius: 50%;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 5rem;
-    height: 5rem;
-    background: #fff;
-    border-radius: 50%;
-}
-
-.project-layer a i {
+    color: black;
     font-size: 2rem;
-    color: var(--second-bg-color);
 }
 
-.projects-container::-webkit-scrollbar{
-display:none;
-}
-.project-box.active .project-layer{
-transform: translateY(0);
-}
-@media (max-width:768px){
-
-.project-layer h4{
-font-size:2.2rem;
+/* --- Navigation Buttons --- */
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
 }
 
-.project-layer p{
-font-size:1.4rem;
+
+
+/* --- Navigation Buttons Fix --- */
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 4rem;
+    position: relative;
+    z-index: 100; /* Ensures buttons are above other elements */
 }
 
+.slider-controls button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-500%);
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: var(--bg-color);
+    font-size: 4rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 1rem var(--main-color);
+    z-index: 10;
+    transition: 0.3s;
 }
-@media (max-width:768px){
+
+.prev-btn { left: -8rem; }
+.next-btn { right: -8rem; }
+
+/* Make sure the icon inside is centered */
+.slider-controls button i {
+    line-height: 1;
+    display: block;
+}
+
+/* Hover effect only for desktop */
+@media (min-width: 769px) {
+    .slider-controls button:hover {
+        background: transparent;
+        color: var(--main-color);
+    }
+}
+
+/* --- Mobile Fixes --- */
+@media (max-width: 768px) {
+    section {
+        padding: 5rem 3% 2rem; /* Reduce padding for mobile */
+    }
+
+     .projects-wrapper {
+        max-width: 95%; /* Make it wider on mobile */
+    } 
+.project-layer h4 { font-size: 2rem; }
+    .project-layer p { 
+        margin-top: 5px;
+        font-size: 1.4rem; }
+
+    .slider-controls {
+        display: flex;
+        justify-content: center;
+        gap: 7rem;
+        margin-top: 3rem;
+    }
     
- 
+    .slider-controls button {
+        position: static;
+        transform: none;
+        width: 5rem;
+        height: 5rem;
+    }
 
-.projects{
-height:calc(60vh - 120px);
-overflow-y:auto;
-scroll-snap-type:y mandatory;
-
-}
-.project.heading .heading-content{
-    position: fixed;
-    top: 0;
-}
-.projects-container{
-overscroll-behavior: contain;
-}
-.projects-container{
--webkit-overflow-scrolling: touch;
-}
-.projects-container{
-    
-border: 2px solid var(--main-color);
-display:flex;
-flex-direction:column;
-scroll-behavior: smooth;
-gap:0;
-}
-
-.project-box-link{
-height:calc(100vh - 120px);
-
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-.project-box{
-width:90%;
-max-width:400px;
-}
-
+    .prev-btn, .next-btn { left: auto; right: auto; }
 }
 
 
