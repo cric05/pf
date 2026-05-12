@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
 const track = document.querySelector('.projects-track');
 const slides = Array.from(track.children);
 const nextButton = document.querySelector('.next-btn');
+const sliderControls = document.querySelector('.slider-controls');
 const prevButton = document.querySelector('.prev-btn');
+const projectSection = document.querySelector('#projects');
 const projectLinks = document.querySelectorAll('.project-box-link');
 
 let currentIndex = 0;
@@ -27,6 +29,26 @@ function updateSlider() {
     // Update button visibility/opacity
     updateButtonStates();
 }
+// --- 2. HIDE/SHOW ARROWS (Middle of screen detection) ---
+const observerOptions = {
+    root: null,
+    // rootMargin: top, right, bottom, left
+    // -30% top and bottom means the section must be in the middle 40% of the screen
+    rootMargin: "-60% 0px -60% 0px", 
+    threshold: 0 
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            sliderControls.classList.add('arrows-visible');
+        } else {
+            sliderControls.classList.remove('arrows-visible');
+        }
+    });
+}, observerOptions);
+
+observer.observe(projectSection);
 
 function updateButtonStates() {
     // If at the first project, hide or dim the left arrow

@@ -1109,6 +1109,16 @@ body.light-mode .skill-item {
     margin-top: 4rem;
     position: relative;
     z-index: 100; /* Ensures buttons are above other elements */
+    transition: all 0.3s ease-in-out;
+    opacity: 0; /* Hidden by default */
+    visibility: hidden;
+    transform: scale(0.8);
+}
+/* This class is added when the section is centered */
+.slider-controls.arrows-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
 }
 
 .slider-controls button {
@@ -1127,11 +1137,15 @@ body.light-mode .skill-item {
     align-items: center;
     box-shadow: 0 0 1rem var(--main-color);
     z-index: 10;
-    transition: 0.3s;
+    transition: 0.5s;
 }
 
-.prev-btn { left: -8rem; }
-.next-btn { right: -8rem; }
+.prev-btn { 
+    left: -8rem;
+ }
+.next-btn { 
+    right: -8rem;
+ }
 
 /* Make sure the icon inside is centered */
 .slider-controls button i {
